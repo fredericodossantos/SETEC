@@ -1,0 +1,11 @@
+# Ignore all files in the js folder
+/js/*
+
+# Ignore all files in the scss folder
+/scss/*
+
+# Ignore all files in the fonts folder
+/fonts/*
+
+# Ignore all files in the auxiliar folder
+/auxiliar/*
