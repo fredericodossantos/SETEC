@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2023 at 09:26 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Tempo de geração: 17/07/2023 às 16:17
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sipam_db`
+-- Banco de dados: `sipam_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `borrowers`
+-- Estrutura para tabela `borrowers`
 --
 
 CREATE TABLE `borrowers` (
@@ -36,16 +36,18 @@ CREATE TABLE `borrowers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `borrowers`
+-- Despejando dados para a tabela `borrowers`
 --
 
 INSERT INTO `borrowers` (`id`, `name`, `email`, `phone`, `organization_id`) VALUES
-(1, 'Zezim Joinha', 'joinha@gmail.com', '9199667754', NULL);
+(1, 'Zezim Joinha', 'joinha@gmail.com', '9199667754', 1),
+(9, 'João Divino', 'divino@doceu.com', '73645272982', 2),
+(10, 'Zé Mané', 'ze@doceu.com', '56784567456', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `borrow_log`
+-- Estrutura para tabela `borrow_log`
 --
 
 CREATE TABLE `borrow_log` (
@@ -59,7 +61,7 @@ CREATE TABLE `borrow_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `borrow_log`
+-- Despejando dados para a tabela `borrow_log`
 --
 
 INSERT INTO `borrow_log` (`id`, `borrower_id`, `equipment_id`, `borrow_date`, `return_date`, `status_id`, `process_number`) VALUES
@@ -68,7 +70,7 @@ INSERT INTO `borrow_log` (`id`, `borrower_id`, `equipment_id`, `borrow_date`, `r
 -- --------------------------------------------------------
 
 --
--- Table structure for table `components`
+-- Estrutura para tabela `components`
 --
 
 CREATE TABLE `components` (
@@ -81,7 +83,7 @@ CREATE TABLE `components` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipment`
+-- Estrutura para tabela `equipment`
 --
 
 CREATE TABLE `equipment` (
@@ -94,16 +96,19 @@ CREATE TABLE `equipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `equipment`
+-- Despejando dados para a tabela `equipment`
 --
 
 INSERT INTO `equipment` (`id`, `name`, `description`, `category`, `serial_number`, `status_id`) VALUES
-(13, 'DRONE', 'Equipamento de filmagem aérea', 'FOTOREGISTRO', '12222111122', 1);
+(13, 'DRONE', 'Equipamento de filmagem aérea', 'FOTOREGISTRO', '12222111122', 1),
+(14, 'MALA 001', 'ANTENA', 'TELECOM', NULL, NULL),
+(15, 'Equipamento n2', 'n2', 'drone', NULL, NULL),
+(16, 'jj', 'jj', 'jjj', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `organization`
+-- Estrutura para tabela `organization`
 --
 
 CREATE TABLE `organization` (
@@ -112,10 +117,19 @@ CREATE TABLE `organization` (
   `acronym` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `organization`
+--
+
+INSERT INTO `organization` (`id`, `name`, `acronym`) VALUES
+(0, 'Núcleo do 2º Batalhão de Comunicações e Guerra Eletrônica de Selva                              ', '2º Bcom'),
+(1, 'ACME CORPORATION', 'AAA'),
+(2, 'Instituto Chico Mendes de Biodiversidade', 'ICM Bio');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status_lookup`
+-- Estrutura para tabela `status_lookup`
 --
 
 CREATE TABLE `status_lookup` (
@@ -124,7 +138,7 @@ CREATE TABLE `status_lookup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `status_lookup`
+-- Despejando dados para a tabela `status_lookup`
 --
 
 INSERT INTO `status_lookup` (`id`, `status`) VALUES
@@ -134,7 +148,7 @@ INSERT INTO `status_lookup` (`id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -146,27 +160,25 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Despejando dados para a tabela `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`) VALUES
-(1, 'Frederico dos Santos', 'frederico.santos@sipam.gov.br', 'abc', '2023-06-23 12:53:50'),
-(3, 'Gavin Cortez', 'juju@gmail.com', 'asdfg', '2023-06-26 13:33:00'),
-(4, 'Pedro Pedrada', 'fredericosantos.br@infraero.gov', 'asdfg', '0000-00-00 00:00:00');
+(1, 'Frederico dos Santos', 'frederico.santos@sipam.gov.br', 'abc', '2023-06-23 12:53:50');
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `borrowers`
+-- Índices de tabela `borrowers`
 --
 ALTER TABLE `borrowers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `organization_id` (`organization_id`);
 
 --
--- Indexes for table `borrow_log`
+-- Índices de tabela `borrow_log`
 --
 ALTER TABLE `borrow_log`
   ADD PRIMARY KEY (`id`),
@@ -175,89 +187,89 @@ ALTER TABLE `borrow_log`
   ADD KEY `fk_status_id` (`status_id`);
 
 --
--- Indexes for table `components`
+-- Índices de tabela `components`
 --
 ALTER TABLE `components`
   ADD PRIMARY KEY (`id`),
   ADD KEY `equipment_id` (`equipment_id`);
 
 --
--- Indexes for table `equipment`
+-- Índices de tabela `equipment`
 --
 ALTER TABLE `equipment`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_equipment_status_id` (`status_id`);
 
 --
--- Indexes for table `organization`
+-- Índices de tabela `organization`
 --
 ALTER TABLE `organization`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `status_lookup`
+-- Índices de tabela `status_lookup`
 --
 ALTER TABLE `status_lookup`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `borrowers`
+-- AUTO_INCREMENT de tabela `borrowers`
 --
 ALTER TABLE `borrowers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `borrow_log`
+-- AUTO_INCREMENT de tabela `borrow_log`
 --
 ALTER TABLE `borrow_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `components`
+-- AUTO_INCREMENT de tabela `components`
 --
 ALTER TABLE `components`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `equipment`
+-- AUTO_INCREMENT de tabela `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `status_lookup`
+-- AUTO_INCREMENT de tabela `status_lookup`
 --
 ALTER TABLE `status_lookup`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Restrições para tabelas despejadas
 --
 
 --
--- Constraints for table `borrowers`
+-- Restrições para tabelas `borrowers`
 --
 ALTER TABLE `borrowers`
   ADD CONSTRAINT `borrowers_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`);
 
 --
--- Constraints for table `borrow_log`
+-- Restrições para tabelas `borrow_log`
 --
 ALTER TABLE `borrow_log`
   ADD CONSTRAINT `fk_borrower_id` FOREIGN KEY (`borrower_id`) REFERENCES `borrowers` (`id`),
@@ -265,13 +277,13 @@ ALTER TABLE `borrow_log`
   ADD CONSTRAINT `fk_status_id` FOREIGN KEY (`status_id`) REFERENCES `status_lookup` (`id`);
 
 --
--- Constraints for table `components`
+-- Restrições para tabelas `components`
 --
 ALTER TABLE `components`
   ADD CONSTRAINT `components_ibfk_1` FOREIGN KEY (`equipment_id`) REFERENCES `equipment` (`id`);
 
 --
--- Constraints for table `equipment`
+-- Restrições para tabelas `equipment`
 --
 ALTER TABLE `equipment`
   ADD CONSTRAINT `fk_equipment_status_id` FOREIGN KEY (`status_id`) REFERENCES `status_lookup` (`id`);
