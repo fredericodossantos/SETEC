@@ -82,6 +82,9 @@ require_once '../../db/database.php';
                             INNER JOIN status_lookup ON borrow_log.status_id = status_lookup.id";
 
                             $result = mysqli_query($conn, $sql);
+                            if (!$result) {
+                                die('Query Failed' . mysqli_error($conn));
+                            }
 
                             while ($row = mysqli_fetch_assoc($result)) {
                         ?>

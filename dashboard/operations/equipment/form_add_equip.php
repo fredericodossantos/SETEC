@@ -60,27 +60,30 @@ if (!isset($_SESSION['loggedin'])) {
                         <form action="add_equip.php" method="POST">
                             <div class="form-group mb-3">
                                 <label for="">Nome Equipamento</label>
-                                <input type="text" name="name" class="form-control" placeholder="Nome do equipamento">                            
+                                <input type="text" name="name" class="form-control" placeholder="Nome do equipamento">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Descrição</label>
-                                <input type="text" name="description" class="form-control" placeholder="Descreva o equipamento">                            
+                                <input type="text" name="description" class="form-control" placeholder="Descreva o equipamento">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="">Categoria</label>
                                 <input type="text" name="category" class="form-control" placeholder="Categoria do equipamento">
                             </div>
                             <div class="form-group mb-3">
+                                <label for="">Número de série</label>
+                                <input type="text" name="serial_number" class="form-control" placeholder="Número de série do equipamento">
+                            </div>
+                            <!-- Assuming the status is always '2 - disponível' for newly created equipment -->
+                            <input type="hidden" name="status_id" value="2">
+
+                            <div class="form-group mb-3">
                                 <button type="submit" name="insert_data" class="btn btn-primary">Save Event</button>
                             </div>
                         </form>
                     </div>
-
-
                 </div>
-
             </div>
-
         </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
