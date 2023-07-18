@@ -77,6 +77,12 @@
                                 <?=$fetched_row['category'];?>
                             </p>
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="">Número de Série</label>
+                            <p class="form-control">
+                                <?=$fetched_row['serial_number'];?>
+                            </p>
+                        </div>
                     </form>
                     </div>
 

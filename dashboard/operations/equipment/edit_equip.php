@@ -7,11 +7,12 @@ if (isset($_POST['update_data'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $category = $_POST['category'];
+    $serial_number = $_POST['serial_number'];
     $id = $_POST['id']; 
     
-    $sql = "UPDATE equipment SET name=?, description=?, category=? WHERE id=?";
+    $sql = "UPDATE equipment SET name=?, description=?, category=? , serial_number=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $name, $description, $category, $id);
+    $stmt->bind_param("ssssi", $name, $description, $category, $serial_number, $id);
     $result = $stmt->execute();
     
     if ($result) {

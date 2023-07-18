@@ -56,8 +56,8 @@ require_once '../../db/database.php';
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Equipamentos em Empréstimo
-                        <a href="form_borrow_equipment.php" class="btn btn-primary float-end">Novo Empréstimo</a>
+                    <h4>Equipamentos
+                        <!-- <a href="form_borrow_equipment.php" class="btn btn-primary float-end">Novo Empréstimo</a> -->
                     </h4>
                 </div>
                 <div class="card-body">

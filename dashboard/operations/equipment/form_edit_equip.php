@@ -82,6 +82,9 @@ if (!isset($_SESSION['loggedin'])) {
                             <input type="text" name="category" value="<?php echo $fetched_row['category']; ?>" class="form-control" placeholder="Categoria do equipamento">
                         </div>
                         <div class="form-group mb-3">
+                            <label for="">Número de Série</label>
+                            <input type="text" name="serial_number" value="<?php echo $fetched_row['serial_number']; ?>" class="form-control" placeholder="Número de série do equipamento">                            
+                        <div class="form-group mb-3">                        
                             <button type="submit" name="update_data" class="btn btn-primary">Salvar Edição</button>
                         </div>
                     </form>
