@@ -55,55 +55,27 @@ require_once '../../db/database.php';
     </nav>
     <?php include ('message.php'); ?>
     <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Equipamentos disponíveis para empréstimo</h4>
-                    <!-- <a href="form_add_equip.php" class="btn btn-primary float-end">Adicionar</a> -->
-                </h4>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Equipamento</th>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Número de Série</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT e.id, e.name, e.description, e.category, e.serial_number, s.status 
-                                FROM `equipment` e
-                                INNER JOIN `status_lookup` s ON e.status_id = s.id";
-                        $result = mysqli_query($conn, $sql);
-                        while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                            <tr>
-                                <th scope="row"><?php echo $row['id']; ?></th>
-                                <td><?php echo $row['name']; ?></td>
-                                <td><?php echo $row['description']; ?></td>
-                                <td><?php echo $row['category']; ?></td>
-                                <td><?php echo $row['serial_number']; ?></td>
-                                <td><?php echo $row['status']; ?></td>
-                                <td>
-                                    <a href="form_borrow_equip.php?id=<?php echo $row['id']; ?>" class="btn btn-success">Emprestar</a>
-                                </td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Formulário de Empréstimo</h4>
 
+
+
+                    
+                    <div class="card-header-action">
+                        <a href="manage_borrow.php" class="btn btn-danger">Voltar</a>
+                        <a href="manage_borrow.php" class="btn btn-success">Salvar</a>
+                        <a href="manage_borrow.php" class="btn btn-warning">Cancelar</a>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 
 
 

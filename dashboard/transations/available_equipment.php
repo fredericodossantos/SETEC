@@ -69,33 +69,33 @@ require_once '../../db/database.php';
                             <th scope="col">Descrição</th>
                             <th scope="col">Categoria</th>
                             <th scope="col">Número de Série</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
-                        $sql = "SELECT e.id, e.name, e.description, e.category, e.serial_number, s.status 
-                                FROM `equipment` e
-                                INNER JOIN `status_lookup` s ON e.status_id = s.id
-                                WHERE s.status = '2 - disponível'"; // Filter for available equipment
-                        $result = mysqli_query($conn, $sql);
-                        while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                            <tr>
-                                <th scope="row"><?php echo $row['id']; ?></th>
-                                <td><?php echo $row['name']; ?></td>
-                                <td><?php echo $row['description']; ?></td>
-                                <td><?php echo $row['category']; ?></td>
-                                <td><?php echo $row['serial_number']; ?></td>
-                                <td><?php echo $row['status']; ?></td>
-                                <td>
-                                    <a href="form_borrow_equip.php?id=<?php echo $row['id']; ?>" class="btn btn-success">Emprestar</a>
-                                </td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
+                    $sql = "SELECT e.id, e.name, e.description, e.category, e.serial_number, s.status 
+                            FROM `equipment` e
+                            INNER JOIN `status_lookup` s ON e.status_id = s.id
+                            WHERE s.status = 'disponivel'"; // Filter for available equipment
+                    $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                        <tr>
+                            <th scope="row"><?php echo $row['id']; ?></th>
+                            <td><?php echo $row['name']; ?></td>
+                            <td><?php echo $row['description']; ?></td>
+                            <td><?php echo $row['category']; ?></td>
+                            <td><?php echo $row['serial_number']; ?></td>
+                            
+                            <td>
+                                <a href="form_borrow_equip.php?id=<?php echo $row['id']; ?>" class="btn btn-success">Emprestar</a>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+
 
                     </tbody>
                 </table>
