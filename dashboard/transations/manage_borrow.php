@@ -78,7 +78,9 @@ require_once '../../db/database.php';
                             FROM borrow_log
                             INNER JOIN organization ON borrow_log.borrower_id = organization.id
                             INNER JOIN equipment ON borrow_log.equipment_id = equipment.id
-                            INNER JOIN status_lookup ON borrow_log.status_id = status_lookup.id";
+                            INNER JOIN status_lookup ON borrow_log.status_id = status_lookup.id
+                            WHERE status_lookup.status = 'emprestado'"; // Filter for equipment with "emprestado" status
+                    
 
                             $result = mysqli_query($conn, $sql);
                             if (!$result) {
