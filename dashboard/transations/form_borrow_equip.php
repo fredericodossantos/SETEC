@@ -110,13 +110,13 @@ $stmt->close();
                         <div class="form-group mb-3">
                             <label for="">Borrower</label>
                             <!-- Assuming "borrowers" is the table for organizations -->
-                            <select name="borrower_id" class="form-control">
+                            <select name="organization" class="form-control">
                                 <option value="">Selecione a organização</option>
                                 <?php
                                 $orgQuery = "SELECT id, name FROM organization";
                                 $orgResult = mysqli_query($conn, $orgQuery);
                                 while ($orgRow = mysqli_fetch_assoc($orgResult)) {
-                                    echo '<option value="' . $orgRow['id'] . '">' . $orgRow['name'] . '</option>';
+                                    echo '<option value="' . $orgRow['name'] . '">' . $orgRow['name'] . '</option>';
                                 }
                                 ?>
                             </select>

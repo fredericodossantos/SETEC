@@ -74,13 +74,13 @@ require_once '../../db/database.php';
                         </thead>
                         <tbody>
                         <?php
+                            
                             $sql = "SELECT borrow_log.id, organization.name AS organization_name, borrow_log.borrow_date, borrow_log.return_date, equipment.name AS equipment_name, status_lookup.status 
                             FROM borrow_log
-                            INNER JOIN organization ON borrow_log.borrower_id = organization.id
+                            INNER JOIN organization ON borrow_log.organization_id = organization.id
                             INNER JOIN equipment ON borrow_log.equipment_id = equipment.id
                             INNER JOIN status_lookup ON borrow_log.status_id = status_lookup.id
-                            WHERE status_lookup.status = 'emprestado'"; // Filter for equipment with "emprestado" status
-                    
+                            WHERE status_lookup.status = 'emprestado'";
 
                             $result = mysqli_query($conn, $sql);
                             if (!$result) {
