@@ -29,6 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $borrowerId = fetchBorrowerIdByName($borrowerName); // Create a function to fetch the borrower ID
 
     if ($stmtInsert->execute()) {
+        // Update the status_id of the equipment to '1 - emprestado'
+        $sqlUpdate = "UPDATE equipment SET status_id = ? WHERE id = ?";
+        $stmtUpdate = $conn->prepare($sqlUpdate);
+        $stmtUpdate->bind_param("ii", $statusId, $equipmentId);
+        $stmtUpdate->execute();
+        $stmtUpdate->close();
+
         $_SESSION['status'] = "Equipamento emprestado com sucesso";
         header("Location: manage_borrow.php");
         exit;
