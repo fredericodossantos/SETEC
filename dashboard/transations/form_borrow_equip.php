@@ -86,12 +86,7 @@ $stmt->close();
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Formulário de Empréstimo</h4>
-                    <div class="card-header-action">
-                        <a href="manage_borrow.php" class="btn btn-danger">Voltar</a>
-                        <a href="manage_borrow.php" class="btn btn-success">Salvar</a>
-                        <a href="manage_borrow.php" class="btn btn-warning">Cancelar</a>
-                    </div>
+                    <h4>Formulário de Empréstimo</h4>   
                 </div>
                 <div class="card-body">
                     <form action="save_borrow.php" method="POST" id="borrowForm">
@@ -113,7 +108,7 @@ $stmt->close();
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Borrower</label>
-                            <input type="text" name="borrower" class="form-control" placeholder="Nome do borrower">
+                            <input type="text" name="Cliente" class="form-control" placeholder="Nome da Organização">
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Data de Empréstimo</label>
