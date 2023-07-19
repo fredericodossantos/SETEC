@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <!-- Add your HTML content here -->
+    <h1>Detalhes do Empréstimo</h1>
+    <p>ID do Empréstimo: <?php echo $borrowLogId; ?></p>
+    <p>Organização: <?php echo $organizationName; ?></p>
+    <p>Data de Empréstimo: <?php echo $borrowDate; ?></p>
+    <p>Data de Devolução: <?php echo $returnDate; ?></p>
+    <p>Equipamento: <?php echo $equipmentName; ?></p>
+    <p>Status: <?php echo $status; ?></p>
+
+    <form action="" method="POST">
+        <button type="submit" class="btn btn-danger">Devolver Equipamento</button>
+    </form>
+
+    <!-- Add your scripts here -->
+</body>
+</html>
