@@ -66,7 +66,7 @@ require_once '../../db/database.php';
                                 <th scope="col">ID</th>
                                 <th scope="col">Organização</th>
                                 <th scope="col">Data de Empréstimo</th>
-                                <th scope="col">Data de Devolução</th>
+                                <th scope="col">Data para Devolução</th>
                                 <th scope="col">Equipamento</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Ação</th>
@@ -75,12 +75,14 @@ require_once '../../db/database.php';
                         <tbody>
                         <?php
                             
+                            
                             $sql = "SELECT borrow_log.id, organization.name AS organization_name, borrow_log.borrow_date, borrow_log.return_date, equipment.name AS equipment_name, status_lookup.status 
-                            FROM borrow_log
-                            INNER JOIN organization ON borrow_log.organization_id = organization.id
-                            INNER JOIN equipment ON borrow_log.equipment_id = equipment.id
-                            INNER JOIN status_lookup ON borrow_log.status_id = status_lookup.id
-                            WHERE status_lookup.status = 'emprestado'";
+                                    FROM borrow_log
+                                    INNER JOIN organization ON borrow_log.organization_id = organization.id
+                                    INNER JOIN equipment ON borrow_log.equipment_id = equipment.id
+                                    LEFT JOIN status_lookup ON borrow_log.status_id = status_lookup.id
+                                    WHERE (status_lookup.status IS NULL OR status_lookup.status = 'emprestado')";
+
 
                             $result = mysqli_query($conn, $sql);
                             if (!$result) {
