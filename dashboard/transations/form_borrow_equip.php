@@ -90,6 +90,7 @@ $stmt->close();
                 </div>
                 <div class="card-body">
                     <form action="save_borrow.php" method="POST" id="borrowForm">
+                        <input type="hidden" name="equipment_id" value="<?php echo $equipmentId; ?>">
                         <div class="form-group mb-3">
                             <label for="">Equipamento</label>
                             <input type="text" name="equipment" class="form-control" value="<?php echo $equipmentName; ?>" readonly>
@@ -108,7 +109,17 @@ $stmt->close();
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Borrower</label>
-                            <input type="text" name="Cliente" class="form-control" placeholder="Nome da Organização">
+                            <!-- Assuming "borrowers" is the table for organizations -->
+                            <select name="borrower_id" class="form-control">
+                                <option value="">Selecione a organização</option>
+                                <?php
+                                $orgQuery = "SELECT id, name FROM organization";
+                                $orgResult = mysqli_query($conn, $orgQuery);
+                                while ($orgRow = mysqli_fetch_assoc($orgResult)) {
+                                    echo '<option value="' . $orgRow['id'] . '">' . $orgRow['name'] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Data de Empréstimo</label>
