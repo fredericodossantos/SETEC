@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
     exit();
 }
 
-require_once '../../db/database.php';  
+require_once '../../db/database.php';
 
 // Check if the ID is provided in the URL parameter
 if (isset($_GET['id'])) {
@@ -23,12 +23,20 @@ if (isset($_GET['id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform the actions for returning the equipment
     // Update the status of the equipment in the borrow_log table
-    $updateQuery = "UPDATE borrow_log SET status_id = (SELECT id FROM status_lookup WHERE status = 'disponivel') WHERE id = ?";
+    $updateQuery = "UPDATE borrow_log SET status_id = 2 WHERE id = ?"; // Set status_id to 2 (disponivel)
     $stmt = $conn->prepare($updateQuery);
     $stmt->bind_param("i", $borrowLogId);
 
     if ($stmt->execute()) {
         // Successfully returned the equipment
+
+        // Now update the equipment table's status_id to 2 (disponivel)
+        $updateEquipmentStatusQuery = "UPDATE equipment SET status_id = 2 WHERE id = ?";
+        $stmt2 = $conn->prepare($updateEquipmentStatusQuery);
+        $stmt2->bind_param("i", $borrowLogId);
+        $stmt2->execute();
+        $stmt2->close();
+
         $_SESSION['success_message'] = "Equipamento devolvido com sucesso.";
         header("Location: manage_borrow.php");
         exit();
