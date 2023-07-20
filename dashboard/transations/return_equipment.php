@@ -29,9 +29,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         // Successfully returned the equipment
-        $_SESSION['success_message'] = "Equipamento devolvido com sucesso.";
-        header("Location: manage_borrow.php");
-        exit();
+        // Now, update the equipment status to "Disponível" (Available)
+        $updateEquipmentStatusQuery = "UPDATE equipment SET status_id = 2 WHERE id = ?";
+        $stmtUpdateEquipment = $conn->prepare($updateEquipmentStatusQuery);
+        $stmtUpdateEquipment->bind_param("i", $equipmentId);
+
+        // Get the equipment ID from the borrow_log
+        $equipmentIdQuery = "SELECT equipment_id FROM borrow_log WHERE id = ?";
+        $stmtEquipmentId = $conn->prepare($equipmentIdQuery);
+        $stmtEquipmentId->bind_param("i", $borrowLogId);
+        $stmtEquipmentId->execute();
+        $equipmentIdResult = $stmtEquipmentId->get_result();
+
+        if ($equipmentIdRow = $equipmentIdResult->fetch_assoc()) {
+            $equipmentId = $equipmentIdRow['equipment_id'];
+            $stmtUpdateEquipment->execute();
+            $_SESSION['success_message'] = "Equipamento devolvido com sucesso.";
+            header("Location: manage_borrow.php");
+            exit();
+        } else {
+            // Error occurred during the update
+            $_SESSION['error_message'] = "Ocorreu um erro ao devolver o equipamento. Por favor, tente novamente.";
+        }
+
+        // Close the statement
+        $stmtUpdateEquipment->close();
     } else {
         // Error occurred during the update
         $_SESSION['error_message'] = "Ocorreu um erro ao devolver o equipamento. Por favor, tente novamente.";

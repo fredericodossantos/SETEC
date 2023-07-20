@@ -72,18 +72,25 @@ require_once '../../db/database.php';
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
+                            <?php
+                          
                             // Fetch borrow_log details along with equipment status
-                            $sql = "SELECT borrow_log.id, organization.name AS organization_name, borrow_log.borrow_date, borrow_log.return_date, equipment.name AS equipment_name
-                                    FROM borrow_log
-                                    INNER JOIN organization ON borrow_log.organization_id = organization.id
-                                    INNER JOIN equipment ON borrow_log.equipment_id = equipment.id";
+                            $sql = "SELECT bl.id, bl.organization_id, o.name AS organization_name, bl.borrow_date, bl.return_date, e.id AS equipment_id, e.name AS equipment_name
+                                    FROM borrow_log bl
+                                    INNER JOIN organization o ON bl.organization_id = o.id
+                                    INNER JOIN equipment e ON bl.equipment_id = e.id
+                                    INNER JOIN (
+                                        SELECT equipment_id, MAX(borrow_date) AS max_borrow_date
+                                        FROM borrow_log
+                                        GROUP BY equipment_id
+                                    ) latest ON bl.equipment_id = latest.equipment_id AND bl.borrow_date = latest.max_borrow_date
+                                    WHERE e.status_id = 1"; // Only fetch borrow logs for equipment that is not available
 
                             $result = mysqli_query($conn, $sql);
                             if (!$result) {
                                 die('Query Failed' . mysqli_error($conn));
                             }
-
+                            
                             while ($row = mysqli_fetch_assoc($result)) {
                                 // Check the status of the equipment
                                 $status = "Disponível";
@@ -93,15 +100,14 @@ require_once '../../db/database.php';
                                 $stmt->bind_param("i", $equipmentId);
                                 $stmt->execute();
                                 $equipmentStatusResult = $stmt->get_result();
-
+                            
                                 if ($equipmentStatusRow = $equipmentStatusResult->fetch_assoc()) {
                                     $equipmentStatusId = $equipmentStatusRow['status_id'];
                                     if ($equipmentStatusId == 1) {
                                         $status = "Emprestado";
                                     }
                                 }
-
-                        ?>
+                            ?>
                             <tr>
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['organization_name']; ?></td>
@@ -112,11 +118,12 @@ require_once '../../db/database.php';
                                     <a href="return_equipment.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Devolver</a>
                                 </td>                                    
                             </tr>
-                        <?php 
+                            <?php 
                             // Close the statement
                             $stmt->close();
                             } // End of while loop
-                        ?>
+                            ?>
+                            
                         </tbody>
                     </table>
                 </div>
