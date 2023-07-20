@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
     exit();
 }
 
-require_once '../../db/database.php';
+require_once '../../db/database.php';  
 
 // Check if the ID is provided in the URL parameter
 if (isset($_GET['id'])) {
@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform the actions for returning the equipment
     // Update the status of the equipment in the borrow_log table
-    $updateQuery = "UPDATE borrow_log SET status_id = (SELECT id FROM status_lookup WHERE status = 'devolvido') WHERE id = ?";
+    $updateQuery = "UPDATE borrow_log SET status_id = (SELECT id FROM status_lookup WHERE status = 'disponivel') WHERE id = ?";
     $stmt = $conn->prepare($updateQuery);
     $stmt->bind_param("i", $borrowLogId);
 
