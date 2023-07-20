@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $organizationName = $_POST['organization'];
     $borrowDate = $_POST['borrow_date'];
     $returnDate = $_POST['return_date'];
-    $statusId = 1;
+    $statusIdBorrowed = 1; // Assuming status_id 1 represents "borrowed" status
 
     $borrowerId = fetchBorrowerIdByName($organizationName);
 
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $sql = "INSERT INTO borrow_log (organization_id, equipment_id, borrow_date, return_date, status_id) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO borrow_log (organization_id, equipment_id, borrow_date, return_date) VALUES (?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sql);
 
     if (!$stmtInsert) {
@@ -26,14 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $stmtInsert->bind_param("iissi", $borrowerId, $equipmentId, $borrowDate, $returnDate, $statusId);
+    $stmtInsert->bind_param("iiss", $borrowerId, $equipmentId, $borrowDate, $returnDate);
 
     if ($stmtInsert->execute()) {
-        $sqlUpdate = "UPDATE equipment SET status_id = ? WHERE id = ?";
-        $stmtUpdate = $conn->prepare($sqlUpdate);
-        $stmtUpdate->bind_param("ii", $statusId, $equipmentId);
-        $stmtUpdate->execute();
-        $stmtUpdate->close();
+        // Update the status of the equipment to "borrowed"
+        $sqlUpdateStatus = "UPDATE equipment SET status_id = ? WHERE id = ?";
+        $stmtUpdateStatus = $conn->prepare($sqlUpdateStatus);
+        $stmtUpdateStatus->bind_param("ii", $statusIdBorrowed, $equipmentId);
+        $stmtUpdateStatus->execute();
+        $stmtUpdateStatus->close();
 
         $_SESSION['status'] = "Equipamento emprestado com sucesso";
         header("Location: manage_borrow.php");

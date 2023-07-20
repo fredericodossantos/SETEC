@@ -116,7 +116,7 @@ $stmt->close();
                                 $orgQuery = "SELECT id, name FROM organization";
                                 $orgResult = mysqli_query($conn, $orgQuery);
                                 while ($orgRow = mysqli_fetch_assoc($orgResult)) {
-                                    echo '<option value="' . $orgRow['name'] . '">' . $orgRow['name'] . '</option>';
+                                    echo '<option value="' . $orgRow['name'] . '">' . $orgRow['name'] . '</option>'; //name-->id
                                 }
                                 ?>
                             </select>
